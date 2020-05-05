@@ -1,2 +1,2 @@
-# Respawn_Mode
- GtiHub page for Respawn Mode - an addon for Stalker Anomaly
+# Respawn Mode
+## [moddb link](https://www.moddb.com/mods/stalker-anomaly/addons/respawn-mode)
