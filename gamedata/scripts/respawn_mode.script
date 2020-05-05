@@ -1,0 +1,123 @@
+---------------------------------------------------------
+--                                                     --
+--                  Respawn Mode 1.0.2                 --
+--                                                     --
+---------------------------------------------------------
+
+
+function on_game_start()
+	RegisterScriptCallback("actor_on_before_death", actor_on_before_death)
+end
+
+
+function on_game_load()
+	UnregisterScriptCallback("actor_on_before_death", actor_on_before_death)
+	RegisterScriptCallback("actor_on_before_death", actor_on_before_death)
+end
+
+
+function actor_on_before_death(whoID,flags)
+
+	dxr_statistics.increment_statistic("deaths")
+	
+	-- clear inventory --
+	local ignore_list = {
+		["cash"] = true,
+		["device_pda_1"] = true,
+		["device_pda_2"] = true,
+		["device_pda_3"] = true,
+		-- important quest items:
+		["army_isg_pendrive"] = true,
+		["attackers_pda"] = true,
+		["bad_psy_helmet"] = true,
+		["blackbox_mlr"] = true,
+		["chernobog_notes"] = true,
+		["cit_doctors_key"] = true,
+		["cit_doctors_pda"] = true,
+		["contact_lost_pda"] = true,
+		["decoder"] = true,
+		["decryption_radio"] = true,
+		["drekavac_notes"] = true,
+		["drx_agr_u_documents"] = true,
+		["drx_jup_u_documents"] = true,
+		["drx_sl_quest_item_1"] = true,
+		["drx_sl_quest_item_2"] = true,
+		["drx_sl_quest_item_3"] = true,
+		["drx_x16_documents"] = true,
+		["drx_x18_documents"] = true,
+		["drx_x19_documents"] = true,
+		["drx_x8_documents"] = true,
+		["good_psy_helmet"] = true,
+		["hb_isg_dushman_intel"] = true,
+		["item_pda_map_mlr"] = true,
+		["jup_b32_scanner_device"] = true,
+		["lx8_history_2_documents"] = true,
+		["lx8_history_3_documents"] = true,
+		["lx8_history_documents"] = true,
+		["main_story_1_quest_case"] = true,
+		["main_story_2_lab_x18_documents"] = true,
+		["main_story_3_lab_x16_documents"] = true,
+		["main_story_4_lab_x10_documents"] = true,
+		["main_story_5_lab_x8_documents"] = true,
+		["main_story_6_jup_ug_documents"] = true,
+		["main_story_7_mon_con_documents"] = true,
+		["mlr_strelok_item_01"] = true,
+		["pri_decoder_documents"] = true,
+		["radio_connections_pda"] = true,
+		["recover_mutant_data_device"] = true,
+		["x8_documents"] = true,
+		["special_delivery_case"] = true,
+		["strelok_pendrive"] = true,
+		["zat_b40_sarge_pda"] = true
+	}
+	local sim = alife()
+	local function release_actor_item(temp, item)
+		if not (ignore_list[item:section()]) then
+			local se_item = sim:object(item:id())
+			if (se_item) then
+				sim:release(se_item,true)
+			end
+		end
+	end
+	db.actor:iterate_inventory(release_actor_item,nil)
+	---------------------
+	
+	-- death animation --
+	level.disable_input()
+	get_console():execute("hud_draw off")
+	_G.mus_vol = get_console():get_float("snd_volume_music")
+	_G.amb_vol = get_console():get_float("snd_volume_eff")
+	get_console():execute("snd_volume_eff 0")
+	get_console():execute("snd_volume_music 0")
+	
+	level.add_cam_effector("camera_effects\\surge_02.anm", 444, false, "xr_effects.on_tutor_gameover_respawn")
+	level.add_pp_effector("actor_death.ppe",445,false)
+	level.add_pp_effector("rcom_actor_death_quick.ppe",446,false)
+	
+	local function draw_hud()
+		level.enable_input()
+		get_console():execute("hud_draw on")
+		return true
+	end
+	CreateTimeEvent("respawn_mode_draw_hud", "draw_hud", 2, draw_hud)
+	--------------------
+	
+	--- reset health ---
+	bind_stalker_ext.invulnerable_time = time_global() + 30000
+	db.actor:set_health_ex(1)
+	db.actor.power = 1
+	db.actor.radiation = 0
+	db.actor.bleeding = 1
+	db.actor.satiety = 1
+	db.actor.psy_health = 1
+	--------------------
+	
+	--> xr_effects.on_tutor_gameover_respawn()
+	
+	flags.ret_value = false	
+end
+
+
+function do_nothing()
+	local nothing = true
+end

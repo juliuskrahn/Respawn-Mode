@@ -1,0 +1,170 @@
+;; modified for Respawn Mode
+
+;; ===========================< Loadout >=============================
+;; To add items in the item lists:
+;; -------------------------------
+;; add a new line: "item_section			= value_1,value_2,value3" under the correct section below
+;; "item_section": is the section name of the your item. NOTE: don't make lines with the same "item_section", only the last one will be read
+;; "value_1": (boolean  value, must be true or false) determines wether this item should be added to player's inventory list (false) or to the loadout pick list (true)
+;; "value_2": (number) the amount of the said item
+;; "value_3": (number) how many points it requires
+;; "value_4": (number) what progression difficulty is this item locked at (2 means it's available for difficulty 1 and 2) [no value means its available for all difficulties]
+;; ========================================================
+;; put your custom items under "custom" section, they will always appear to pick from
+;; NOTE: you will get a single bolt only no matter how many you put in here, due to technical engine reasons
+
+
+[points]
+total_points_eco_1 = 0
+total_points_eco_2 = 0
+total_points_eco_3 = 0
+
+
+[custom]	
+
+[shared]:custom
+cash 					        = false,1,0
+device_pda_1 			        = false,1,0
+device_flashlight 		        = false,1,0
+detector_geiger                 = false,1,0
+detector_advanced               = false,1,0
+itm_backpack			        = false,1,0
+equ_small_military_pack         = false,1,0
+box_matches 			        = false,1,0
+medkit_ai1                      = false,1,0
+antirad                         = false,2,0
+medkit                          = false,2,0
+bandage                         = false,2,0
+flask                           = false,2,0
+ration_ukr                      = false,1,0
+beans                           = false,1,0
+bread					        = false,1,0
+wpn_knife3                      = false,1,0
+wpn_vz61                        = false,1,0
+wpn_pm                          = false,2,0
+wpn_toz34                       = false,1,0
+wpn_ak74                        = false,1,0
+wpn_ak74u_snag                  = false,1,0
+wpn_mosin                       = false,1,0
+wpn_addon_scope_pu              = false,1,0
+grenade_f1                      = false,3,0
+helm_resp                       = false,1,0
+helm_respirator_gp5             = false,1,0
+bolt 					        = false,1,0
+lead_box                        = false,1,0
+
+[stalker_loadout]:shared
+stalker_outfit                  = false,1,0
+novice_outfit		            = false,1,0
+stalker_patch			        = false,1,0
+
+
+[bandit_loadout]:shared
+bandit_sun_outfit               = false,1,0
+bandit_novice_outfit            = false,1,0
+bandit_patch			        = false,1,0
+
+[ecolog_loadout]:shared
+ecolog_outfit_green             = false,1,0
+novice_outfit		            = false,1,0
+ecolog_patch			        = false,1,0
+
+[dolg_loadout]:shared
+dolg_outfit                     = false,1,0
+dolg_novice_outfit	            = false,1,0
+dolg_patch				        = false,1,0
+
+[freedom_loadout]:shared
+svoboda_heavy_outfit_2          = false,1,0
+svoboda_novice_outfit           = false,1,0
+freedom_patch			        = false,1,0
+
+[killer_loadout]:shared
+merc_outfit		                = false,1,0
+merc_scout_outfit               = false,1,0
+killer_patch				    = false,1,0
+
+[army_loadout]:shared
+specops_outfit                  = false,1,0
+army_outfit		                = false,1,0
+army_patch				        = false,1,0
+
+[monolith_loadout]:shared
+monolith_outfit	                = false,1,0
+novice_outfit                   = false,1,0
+monolith_patch			        = false,1,0
+
+[csky_loadout]:shared
+cs_stalker_outfit               = false,1,0
+cs_novice_outfit	            = false,1,0
+csky_patch				        = false,1,0
+
+[renegade_loadout]:shared
+renegademerc_outfit	            = false,1,0
+novice_outfit                   = false,1,0
+renegade_patch			        = false,1,0
+
+[greh_loadout]:shared
+greh_ps5_outfit	                = false,1,0
+novice_outfit                   = false,1,0
+greh_patch			            = false,1,0
+
+[isg_loadout]:shared
+isg_outfit	                    = false,1,0
+novice_outfit                   = false,1,0
+isg_patch			            = false,1,0
+
+[zombied_loadout]:shared,stalker_loadout
+
+
+;; ===========================< Ammo >=============================
+;-- defined ammo type per weapon here (weapon section = ammo section) - Example: wpn_glock = ammo_9x19_fmj_bad
+;-- when a weapon in this section found in your inventory, you will be given the ammo stated for it
+;-- otherwise, ammo type will be the first one define in weapon's config
+[ammo_type_per_wpn]
+
+
+;-- define ammo count per ammo section (section = count) here - Example: ammo_9x19_fmj_bad = 60
+;-- When an ammo type is picked for a weapon in your inventory, it will be given to player by the count defined here
+;-- otherwise, ammo's count will be a full box size
+[ammo_count]
+
+;; ===========================< Money >=============================
+[stalker_money]
+money = 8000
+
+[bandit_money]
+money = 8000
+
+[ecolog_money]
+money = 8000
+
+[dolg_money]
+money = 8000
+
+[freedom_money]
+money = 8000
+
+[killer_money]
+money = 8000
+
+[army_money]
+money = 8000
+
+[monolith_money]
+money = 8000
+
+[csky_money]
+money = 8000
+
+[renegade_money]
+money = 8000
+
+[greh_money]
+money = 8000
+
+[isg_money]
+money = 8000
+
+[zombied_money]
+money = 1
