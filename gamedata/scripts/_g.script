@@ -45,7 +45,7 @@ USE_MARSHAL = marshal ~= nil
 mus_vol                  	= 0             -- Used for temp sound muting
 amb_vol                  	= 0             -- Used for temp sound muting
 b_discard_settings_shown 	= false
-timer_transparent        	= 0 			--маскхалат
+timer_transparent        	= 0 			--пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 AC_ID                    	= 0				-- Actor id, don't touch!
 AC_LVL_ID					= nil			-- Actor level id, set by simulation_objects
 ini_sys                  	= system_ini() 	-- global use for cached system_ini()
@@ -124,7 +124,7 @@ function create_ammo(section, position, lvi, gvi, pid, num)
 	return t
 end
 
-function get_object_squad(object,caller) -- Получить сквад обьекта!!!!!
+function get_object_squad(object,caller) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ!!!!!
 	if not (object) then
 		return
 	end
@@ -454,36 +454,36 @@ local function timer_travel(pos,lvid,gvid,angle)
 	return true
 end
 function ChangeLevel(pos,lvid,gvid,angle,anim)
--- IMPORTANT: You must realize that when you send this event it will happen immediately
--- if done in lua code it will not execute the rest of the block, level changes immediately happen!
---[[cut out for Respawn Mode (no animation)...
-	if anim then
-		SendScriptCallback("on_before_level_changing")
+	-- IMPORTANT: You must realize that when you send this event it will happen immediately
+	-- if done in lua code it will not execute the rest of the block, level changes immediately happen!
+	--[[ cut out for Respawn Mode (no animation)
+		if anim then
+			SendScriptCallback("on_before_level_changing")
+			
+			-- Stop talking
+			if db.actor:is_talking() then
+				db.actor:stop_talk()
+			end
+			
+			-- Hide UI
+			local hud = get_hud()
+			if (hud) then
+				hud:HideActorMenu()
+			end
+			
+			-- Hide PDA
+			local pda_menu = ActorMenu.get_pda_menu()
+			if (pda_menu:IsShown()) then
+				pda_menu:HideDialog()
+			end
 		
-		-- Stop talking
-		if db.actor:is_talking() then
-			db.actor:stop_talk()
+			level.add_pp_effector("sleep_fade.ppe", 1313, false)
+			
+			CreateTimeEvent(0,"delay_travel",3,timer_travel,pos,lvid,gvid,angle) -- Tronex
+		else
+			change_level_now(pos,lvid,gvid,angle)
 		end
-		
-		-- Hide UI
-		local hud = get_hud()
-		if (hud) then
-			hud:HideActorMenu()
-		end
-		
-		-- Hide PDA
-		local pda_menu = ActorMenu.get_pda_menu()
-		if (pda_menu:IsShown()) then
-			pda_menu:HideDialog()
-		end
-	
-		level.add_pp_effector("sleep_fade.ppe", 1313, false)
-		
-		CreateTimeEvent(0,"delay_travel",3,timer_travel,pos,lvid,gvid,angle) -- Tronex
-	else
-		change_level_now(pos,lvid,gvid,angle)
-	end
---]]
+	--]]
 	change_level_now(pos,lvid,gvid,angle) -- added for Respawn Mode (no animation)
 end
 function change_level_now(pos,lvid,gvid,angle)
@@ -733,7 +733,7 @@ function abort(msg, ...)
 	--]]
 end
 
-function callstack() -- выводит в лог стэк вызова функций.
+function callstack() -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 	if (log and debug and type(debug.traceback) == 'function') then
 		log(debug.traceback('\n', 2))
 	end
@@ -805,7 +805,7 @@ function distance_between(obj1, obj2)
 	return obj1:position():distance_to(obj2:position())
 end
 
--- +сли один объект nil, например нет актера, то считаем, что он далеко
+-- +пїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ nil, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 function distance_between_safe(obj1, obj2)
 	if(obj1 == nil or obj2 == nil) then return 100000 end
 	return obj1:position():distance_to(obj2:position())
@@ -822,10 +822,10 @@ end
 --------------------------------------------------
 -- Functions and variables added by Zmey
 --------------------------------------------------
--- іонстанта, которуі использовать в местах, где нужно задать неограниченное время действия
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 time_infinite = 100000000
 
--- +сли в даннvй момент вvполняется какое-то действие, прерvвает его и отклічает скриптовvй режим
+-- +пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅvпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅvпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ-пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅvпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅvпїЅ пїЅпїЅпїЅпїЅпїЅ
 function interrupt_action(who, script_name)
 	if who:get_script() then
 		who:script(false, script_name)
@@ -916,7 +916,7 @@ function get_clsid(obj)
 	return obj:clsid()
 end
 
-function get_param_string(src_string , obj) -- преобразует строку в соответствии со значением
+function get_param_string(src_string , obj) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	--printf("src_string is [%s] obj name is [%s]", tostring(src_string), obj:name())
 	local script_ids = db.script_ids[obj:id()]
 	local out_string, num = string.gsub(src_string, "%$script_id%$", tostring(script_ids))
@@ -947,11 +947,11 @@ function string.gsplit(s, sep, plain)
 	end
 end
 
-function odd( x ) -- проверяет целую часть числа на нечетность
+function odd( x ) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 	return math.floor( x * 0.5 ) * 2 == math.floor( x )
 end
 
---Tvчисляет yaw в радианах
+--TvпїЅпїЅпїЅпїЅпїЅпїЅпїЅ yaw пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function yaw( v1, v2 )
 	return  math.acos( ( (v1.x*v2.x) + (v1.z*v2.z ) ) / ( math.sqrt(v1.x*v1.x + v1.z*v1.z ) * math.sqrt(v2.x*v2.x + v2.z*v2.z ) ) )
 end
@@ -964,12 +964,12 @@ end
 function vector_cross(v1, v2)
 	return vector():set(v1.y  * v2.z  - v1.z  * v2.y, v1.z  * v2.x  - v1.x  * v2.z, v1.x  * v2.y  - v1.y  * v2.x)
 end
-function vec_to_str (vector) -- переводит вектор в строку.
+function vec_to_str (vector) -- пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅ.
 	if vector == nil then return "nil" end
 	return string.format("[%s:%s:%s]", vector.x, vector.y, vector.z)
 end
 
---Поворачивает вектор вокруг оси y против часовой стрелки.
+--пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ y пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 function vector_rotate_y(v, angle)
 	angle = angle * 0.017453292519943295769236907684886
 	local c = math.cos (angle)
@@ -1417,7 +1417,7 @@ function set_inactivate_input_time(delta)
 	level.disable_input()
 end
 
---' находится ли NPC во фруструме игрока
+--' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ NPC пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 function npc_in_actor_frustrum(npc)
 	local actor_dir = device().cam_dir
 	--local actor_dir = db.actor:direction()
@@ -1427,7 +1427,7 @@ function npc_in_actor_frustrum(npc)
 	return yaw < 35
 end
 
---' Lсталость
+--' LпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function on_actor_critical_power()
 
 end
@@ -1435,7 +1435,7 @@ end
 function on_actor_critical_max_power()
 end
 
---' іровотечение
+--' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function on_actor_bleeding()
 
 end
@@ -1443,27 +1443,27 @@ end
 function on_actor_satiety()
 end
 
---' іадиация
+--' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function on_actor_radiation()
 
 end
 
---' іаклинило оружие
+--' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ
 function on_actor_weapon_jammed()
 
 end
 
---' не может ходить изза веса
+--' пїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 function on_actor_cant_walk_weight()
 
 end
 
---' пси воздействие
+--' пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 function on_actor_psy()
 end
 
 local save_marker_result = {}
--- Функции для проверки корректности сейв лоад
+-- пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ
 function set_save_marker(p, mode, check, prefix)
 	prefix = tostring(prefix)
 		if (check ~= true) then
@@ -1502,7 +1502,7 @@ function set_save_marker(p, mode, check, prefix)
 		save_marker_result[prefix] = nil
 end
 
--- меняет team:squad:group обьекта.
+-- пїЅпїЅпїЅпїЅпїЅпїЅ team:squad:group пїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 function change_team_squad_group(se_obj, team, squad, group)
 	local cl_obj = db.storage[se_obj.id] and db.storage[se_obj.id].object
 	if cl_obj ~= nil then
@@ -1600,7 +1600,7 @@ function id_by_sid( story_id ) -- get object ID by story id
 end
 
 
---Проверка по временному интервалу.
+--пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ.
 function in_time_interval(val1, val2)
 	local game_hours = level.get_time_hours()
 	if val1 >= val2 then
@@ -1758,7 +1758,7 @@ function CALifeUpdateManager__on_before_change_level(packet)
 	end
 end
 
--- 'Запуск динамического окна.
+-- 'пїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ.
 function run_dynamic_element(folder,close_inv)
    if close_inv==false then
       folder:ShowDialog(true)
@@ -1775,7 +1775,7 @@ function run_dynamic_element(folder,close_inv)
    end
 end
 
--- 'Создание предмета в рюкзаке ГГ.
+-- 'пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅ.
 function give_object_to_actor(sec,count)
 	if count==nil then count=1 end
 	for i=1, count do
@@ -2085,7 +2085,7 @@ end
 function copy_table(dest, src)
 	for k,v in pairs(src) do
 		if type(v) == "table" then
-			--' рекурсивный вызов себя же для подтаблиц
+			--' пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅ пїЅпїЅ пїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ
 			dest[k] = {}
 			copy_table(dest[k], v)
 		else
